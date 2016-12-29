@@ -3,7 +3,6 @@ package huzefagadi.com.zoom;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,11 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import huzefagadi.com.zoom.fragments.ChatFragment;
 import huzefagadi.com.zoom.fragments.EbooksFragment;
+import huzefagadi.com.zoom.fragments.HomeDetailsFragment;
 import huzefagadi.com.zoom.fragments.HomeFragment;
 import huzefagadi.com.zoom.fragments.VideosFragment;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
@@ -38,12 +39,6 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.pager_tabs);
-
-
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -120,6 +115,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onButtonPressed(String buttonName) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        HomeDetailsFragment homeDetailsFragment = new HomeDetailsFragment();
+        for(int i=0;i<Constants.COURSES.length;i++)
+        {
+            if(buttonName.equals(Constants.COURSES[i]))
+            {
+                Bundle args = new Bundle();
+                args.putString("course",buttonName);
+                homeDetailsFragment.setArguments(args);
+                mViewPager.setVisibility(View.GONE);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragments, homeDetailsFragment, buttonName).addToBackStack(buttonName).commit();
+            }
+        }
     }
 
     public class CollectionPagerAdapter extends FragmentStatePagerAdapter {

@@ -78,22 +78,14 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this,view);
         GridView gridview = (GridView) view.findViewById(R.id.grid_view_home);
-        gridview.setAdapter(new GridViewAdapter(getActivity()));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(getActivity(), "" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        gridview.setAdapter(new GridViewAdapter(getActivity(),this,"HomeFragment"));
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String buttonName) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onButtonPressed(buttonName);
         }
     }
 

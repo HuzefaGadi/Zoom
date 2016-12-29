@@ -6,4 +6,8 @@
     <color name="linkColor">#4898ff</color>
     <color name="gridViewBackground">#4898ff</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="buttonUnfocused">#1976d2</color>
+    <color name="buttonFocused">#1e88e5</color>
+    <color name="buttonPressed">#2196f3</color>
 </resources>
