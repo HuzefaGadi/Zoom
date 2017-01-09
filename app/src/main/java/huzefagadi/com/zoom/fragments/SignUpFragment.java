@@ -7,21 +7,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.widget.Button;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import huzefagadi.com.zoom.R;
-import huzefagadi.com.zoom.adapters.GridViewAdapter;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ */
+public class SignUpFragment extends Fragment {
 
-public class VideosFragment extends Fragment {
 
-    @BindView(R.id.grid_view_home)
-    GridView gridView;
     private OnFragmentInteractionListener mListener;
-    public VideosFragment() {
+
+
+
+    public SignUpFragment() {
         // Required empty public constructor
     }
 
@@ -35,17 +42,16 @@ public class VideosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the grid_card for this fragment
-        View view = inflater.inflate(R.layout.fragment_videos, container, false);
-        ButterKnife.bind(this, view);
-        gridView.setAdapter(new GridViewAdapter(getActivity(), this, "VideosFragment"));
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        ButterKnife.bind(this,view);
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String buttonName) {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onButtonPressed(this.getClass().getName(),buttonName);
+            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -66,5 +72,10 @@ public class VideosFragment extends Fragment {
         mListener = null;
     }
 
+    @OnClick(R.id.button_signup_signin)
+    public void signUp(View v)
+    {
+        mListener.onButtonPressed(this.getClass().getName(),String.valueOf(R.id.button_signup_signin));
+    }
 
 }

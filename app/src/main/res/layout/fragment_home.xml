@@ -5,24 +5,24 @@
     tools:context=".fragments.HomeFragment">
 
 
-    <ImageView
-        android:id="@+id/image_slider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:src="@drawable/slider_image" />
-
-    <GridView
-        android:id="@+id/grid_view_home"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/pager_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/image_slider"
-        android:gravity="center|center_horizontal"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-      />
+        android:layout_gravity="top" />
 
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_below="@+id/pager_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+
+
+    </android.support.v4.view.ViewPager>
 
 </RelativeLayout>
+
+
+

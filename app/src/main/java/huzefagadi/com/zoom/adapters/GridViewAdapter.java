@@ -11,7 +11,9 @@ import android.widget.Toast;
 import huzefagadi.com.zoom.Constants;
 import huzefagadi.com.zoom.R;
 import huzefagadi.com.zoom.customviews.GridCard;
+import huzefagadi.com.zoom.fragments.CoursesFragment;
 import huzefagadi.com.zoom.fragments.HomeFragment;
+import huzefagadi.com.zoom.fragments.VideosFragment;
 
 /**
  * Created by huzefaasger on 27-12-2016.
@@ -52,11 +54,13 @@ public class GridViewAdapter extends BaseAdapter {
         gridCard.getButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               if(fragmentName.equalsIgnoreCase("HomeFragment"))
-               {
-                   HomeFragment homeFragment = (HomeFragment)fragment;
-                   homeFragment.onButtonPressed(String.valueOf(view.getTag()));
-               }
+                if (fragmentName.equalsIgnoreCase("CoursesFragment")) {
+                    CoursesFragment coursesFragment = (CoursesFragment) fragment;
+                    coursesFragment.onButtonPressed(String.valueOf(view.getTag()));
+                } else if (fragmentName.equalsIgnoreCase("VideosFragment")) {
+                    VideosFragment videosFragment = (VideosFragment) fragment;
+                    videosFragment.onButtonPressed(String.valueOf(view.getTag()));
+                }
             }
         });
         return gridCard;

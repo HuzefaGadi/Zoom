@@ -3,35 +3,30 @@ package huzefagadi.com.zoom;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import huzefagadi.com.zoom.fragments.ChatFragment;
-import huzefagadi.com.zoom.fragments.EbooksFragment;
 import huzefagadi.com.zoom.fragments.HomeDetailsFragment;
 import huzefagadi.com.zoom.fragments.HomeFragment;
+import huzefagadi.com.zoom.fragments.VideoDetailsFragment;
+import huzefagadi.com.zoom.fragments.VideosListFragment;
 import huzefagadi.com.zoom.fragments.VideosFragment;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener {
 
-    String [] tabs = new String[]{"Home","Chat","Videos","EBooks"};
-    CollectionPagerAdapter mCollectionPagerAdapter;
-    @BindView(R.id.pager)
-    ViewPager mViewPager;
+
+    FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +42,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        fragmentManager = getSupportFragmentManager();
+        HomeFragment homeFragment = new HomeFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragments, homeFragment, Constants.FRAGMENT_HOME_NAME)
+                .addToBackStack(Constants.FRAGMENT_HOME_NAME).commit();
 
-        mCollectionPagerAdapter =
-                new CollectionPagerAdapter(
-                        getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mCollectionPagerAdapter);
+
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        int fragments = fragmentManager.getFragments().size();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (fragments < 2) {
+                Toast.makeText(this, "Are you sure you want to Exit!!", Toast.LENGTH_LONG).show();
+            } else {
+                super.onBackPressed();
+            }
+
         }
     }
 
@@ -113,80 +115,39 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onButtonPressed(String fragmentName,String buttonName) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Bundle args = new Bundle();
+        args.putString("course", buttonName);
+
+        if(fragmentName.equalsIgnoreCase(HomeFragment.class.getName()))
+        {
+            HomeDetailsFragment homeDetailsFragment = new HomeDetailsFragment();
+            homeDetailsFragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, homeDetailsFragment, buttonName).addToBackStack(buttonName).commit();
+        }
+        else if(fragmentName.equalsIgnoreCase(VideosFragment.class.getName()))
+        {
+            VideosListFragment videosListFragment = new VideosListFragment();
+            videosListFragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, videosListFragment, buttonName).addToBackStack(buttonName).commit();
+        }
+        else if(fragmentName.equalsIgnoreCase(VideosListFragment.class.getName()))
+        {
+            VideoDetailsFragment videoDetailsFragment = new VideoDetailsFragment();
+            videoDetailsFragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, videoDetailsFragment, buttonName).addToBackStack(buttonName).commit();
+        }
+    }
+
+
+    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
 
-    @Override
-    public void onButtonPressed(String buttonName) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        HomeDetailsFragment homeDetailsFragment = new HomeDetailsFragment();
-        for(int i=0;i<Constants.COURSES.length;i++)
-        {
-            if(buttonName.equals(Constants.COURSES[i]))
-            {
-                Bundle args = new Bundle();
-                args.putString("course",buttonName);
-                homeDetailsFragment.setArguments(args);
-                mViewPager.setVisibility(View.GONE);
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragments, homeDetailsFragment, buttonName).addToBackStack(buttonName).commit();
-            }
-        }
-    }
 
-    public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
-        public CollectionPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            Fragment fragment = null;
-
-            switch (i) {
-
-                case 1:
-                    fragment = new HomeFragment();
-                    return fragment;
-
-                case 2:
-                    fragment = new ChatFragment();
-                    return fragment;
-
-                case 3:
-                    fragment = new EbooksFragment();
-                    return fragment;
-
-                case 4:
-                    fragment = new VideosFragment();
-                    return fragment;
-
-                default:
-                    return new HomeFragment();
-            }
-
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Home";
-                case 1:
-                    return "Chat";
-                case 2:
-                    return "EBooks";
-                case 3:
-                    return "Videos";
-                default:
-                    return "Home";
-            }
-        }
-    }
 }

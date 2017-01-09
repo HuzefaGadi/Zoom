@@ -1,15 +1,22 @@
 package huzefagadi.com.zoom;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import butterknife.ButterKnife;
+import huzefagadi.com.zoom.fragments.LoginFragment;
+import huzefagadi.com.zoom.fragments.SignUpFragment;
+import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements OnFragmentInteractionListener {
+
+    FragmentManager fragmentManager;
+    SharedPreferences sharedPreferences;
+    Zoom zoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,17 +24,46 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        zoom = ((Zoom) getApplicationContext());
+        sharedPreferences = zoom.getSharedPreferences();
+        fragmentManager = getSupportFragmentManager();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        if (zoom.getLoggedInUser() != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            LoginFragment loginFragment = new LoginFragment();
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragments, loginFragment, Constants.FRAGMENT_LOGIN_NAME)
+                    .addToBackStack(Constants.FRAGMENT_LOGIN_NAME)
+                    .commit();
+        }
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onButtonPressed(String fragmentName,String buttonName) {
+
+        if (buttonName.equals(String.valueOf(R.id.button_signup))) {
+            SignUpFragment signUpFragment = new SignUpFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, signUpFragment, Constants.FRAGMENT_SIGNUP_NAME)
+                    .addToBackStack(Constants.FRAGMENT_SIGNUP_NAME)
+                    .commit();
+        } else if (buttonName.equals(String.valueOf(R.id.button_login))) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (buttonName.equals(String.valueOf(R.id.button_signup_signin))) {
+            fragmentManager.popBackStack();
+        }
+
+    }
+
 
 }

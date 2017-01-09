@@ -1,32 +1,46 @@
 package huzefagadi.com.zoom.fragments;
 
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
-import huzefagadi.com.zoom.R;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import huzefagadi.com.zoom.Constants;
+import huzefagadi.com.zoom.DividerItemDecoration;
+import huzefagadi.com.zoom.R;
+import huzefagadi.com.zoom.adapters.VideosListAdapter;
+import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link EbooksFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
-public class EbooksFragment extends Fragment {
+public class VideosListFragment extends Fragment {
 
+    YouTubePlayerSupportFragment youTubePlayerSupportFragment;
+    //s6Qzy4vtldk
+
+    @BindView(R.id.my_recycler_view)
+    RecyclerView mRecyclerView;
+    LinearLayoutManager mLayoutManager;
+    VideosListAdapter videosListAdapter;
 
     private OnFragmentInteractionListener mListener;
 
-    public EbooksFragment() {
+    public VideosListFragment() {
         // Required empty public constructor
     }
 
@@ -41,9 +55,24 @@ public class EbooksFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the grid_card for this fragment
-        View view = inflater.inflate(R.layout.fragment_ebooks, container, false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_videos_list, container, false);
+        ButterKnife.bind(this, view);
+
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(20));
+
+        // specify an adapter (see also next example)
+        videosListAdapter = new VideosListAdapter(new Constants().getVideoList(),getActivity(), this);
+        mRecyclerView.setAdapter(videosListAdapter);
+
+
         return view;
     }
 
@@ -71,15 +100,5 @@ public class EbooksFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 
 }

@@ -7,21 +7,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import huzefagadi.com.zoom.R;
-import huzefagadi.com.zoom.adapters.GridViewAdapter;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link LoginFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class LoginFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
 
-public class VideosFragment extends Fragment {
 
-    @BindView(R.id.grid_view_home)
-    GridView gridView;
     private OnFragmentInteractionListener mListener;
-    public VideosFragment() {
+
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -35,17 +42,16 @@ public class VideosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the grid_card for this fragment
-        View view = inflater.inflate(R.layout.fragment_videos, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
-        gridView.setAdapter(new GridViewAdapter(getActivity(), this, "VideosFragment"));
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String buttonName) {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onButtonPressed(this.getClass().getName(),buttonName);
+            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -66,5 +72,16 @@ public class VideosFragment extends Fragment {
         mListener = null;
     }
 
+    @OnClick(R.id.button_signup)
+    public void signup(View v)
+    {
+        mListener.onButtonPressed(this.getClass().getName(),String.valueOf(R.id.button_signup));
+    }
+
+    @OnClick(R.id.button_login)
+    public void login(View v)
+    {
+        mListener.onButtonPressed(this.getClass().getName(),String.valueOf(R.id.button_login));
+    }
 
 }

@@ -3,15 +3,22 @@ package huzefagadi.com.zoom.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import huzefagadi.com.zoom.Constants;
 import huzefagadi.com.zoom.adapters.GridViewAdapter;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 import huzefagadi.com.zoom.R;
@@ -22,51 +29,29 @@ import huzefagadi.com.zoom.R;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ *
  */
 public class HomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    String [] tabs = new String[]{"Home","Chat","Videos","EBooks"};
+    CollectionPagerAdapter mCollectionPagerAdapter;
+    @BindView(R.id.pager)
+    ViewPager mViewPager;
 
+    @BindView(R.id.pager_tabs)
+    TabLayout tabLayout;
     private OnFragmentInteractionListener mListener;
 
     public HomeFragment() {
+
+
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
 
     }
@@ -76,16 +61,20 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the grid_card for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this,view);
-        GridView gridview = (GridView) view.findViewById(R.id.grid_view_home);
-        gridview.setAdapter(new GridViewAdapter(getActivity(),this,"HomeFragment"));
+        ButterKnife.bind(this, view);
+
+        mCollectionPagerAdapter = new CollectionPagerAdapter(getActivity().getSupportFragmentManager());
+
+        mViewPager.setAdapter(mCollectionPagerAdapter);
+
+        tabLayout.setupWithViewPager(mViewPager);
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String buttonName) {
         if (mListener != null) {
-            mListener.onButtonPressed(buttonName);
+            mListener.onButtonPressed(this.getClass().getName(),buttonName);
         }
     }
 
@@ -106,15 +95,62 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
+
+
+    public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
+        public CollectionPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            Fragment fragment = null;
+
+            switch (i) {
+
+                case 0:
+                    fragment = new CoursesFragment();
+                    return fragment;
+
+                case 1:
+                    fragment = new ChatFragment();
+                    return fragment;
+
+                case 2:
+                    fragment = new EbooksFragment();
+                    return fragment;
+
+                case 3:
+                    fragment = new VideosFragment();
+                    return fragment;
+
+                default:
+                    return new CoursesFragment();
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Home";
+                case 1:
+                    return "Chat";
+                case 2:
+                    return "EBooks";
+                case 3:
+                    return "Videos";
+                default:
+                    return "Home";
+            }
+        }
+    }
 
 }
