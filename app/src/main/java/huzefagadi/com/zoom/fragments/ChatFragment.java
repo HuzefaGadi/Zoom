@@ -15,7 +15,7 @@ import huzefagadi.com.zoom.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
+ * activities that contain this fragment must implement the
  * {@link ChatFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ChatFragment#newInstance} factory method to

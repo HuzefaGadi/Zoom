@@ -1,4 +1,4 @@
-package huzefagadi.com.zoom;
+package huzefagadi.com.zoom.beans;
 
 /**
  * Created by Rashida on 05/01/17.

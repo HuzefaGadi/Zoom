@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragments"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="huzefagadi.com.zoom.LoginActivity">
+    tools:context="huzefagadi.com.zoom.activities.LoginActivity">
 
 
 

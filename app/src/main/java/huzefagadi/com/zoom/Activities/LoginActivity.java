@@ -1,4 +1,4 @@
-package huzefagadi.com.zoom;
+package huzefagadi.com.zoom.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
+import huzefagadi.com.zoom.utilities.Constants;
+import huzefagadi.com.zoom.R;
+import huzefagadi.com.zoom.Zoom;
 import huzefagadi.com.zoom.fragments.LoginFragment;
 import huzefagadi.com.zoom.fragments.SignUpFragment;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;

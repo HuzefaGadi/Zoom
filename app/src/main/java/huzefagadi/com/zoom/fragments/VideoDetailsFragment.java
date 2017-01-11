@@ -17,15 +17,15 @@ import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import huzefagadi.com.zoom.Constants;
-import huzefagadi.com.zoom.DividerItemDecoration;
+import huzefagadi.com.zoom.utilities.Constants;
+import huzefagadi.com.zoom.utilities.DividerItemDecoration;
 import huzefagadi.com.zoom.R;
 import huzefagadi.com.zoom.adapters.VideosListAdapter;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
+ * activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * */

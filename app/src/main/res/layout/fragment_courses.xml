@@ -21,6 +21,7 @@
         android:layout_below="@+id/image_slider"
         android:gravity="center|center_horizontal"
         android:numColumns="auto_fit"
+        android:layout_margin="5dp"
         android:stretchMode="columnWidth"
         />
 

@@ -1,4 +1,4 @@
-package huzefagadi.com.zoom;
+package huzefagadi.com.zoom.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,12 +14,17 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
+import huzefagadi.com.zoom.R;
+import huzefagadi.com.zoom.fragments.EbookDetailsFragment;
+import huzefagadi.com.zoom.fragments.EbooksFragment;
+import huzefagadi.com.zoom.fragments.EbooksListFragment;
 import huzefagadi.com.zoom.fragments.HomeDetailsFragment;
 import huzefagadi.com.zoom.fragments.HomeFragment;
 import huzefagadi.com.zoom.fragments.VideoDetailsFragment;
-import huzefagadi.com.zoom.fragments.VideosListFragment;
 import huzefagadi.com.zoom.fragments.VideosFragment;
+import huzefagadi.com.zoom.fragments.VideosListFragment;
 import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
+import huzefagadi.com.zoom.utilities.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener {
@@ -118,8 +123,8 @@ public class MainActivity extends AppCompatActivity
     public void onButtonPressed(String fragmentName,String buttonName) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Bundle args = new Bundle();
-        args.putString("course", buttonName);
 
+        args.putString("course", buttonName);
         if(fragmentName.equalsIgnoreCase(HomeFragment.class.getName()))
         {
             HomeDetailsFragment homeDetailsFragment = new HomeDetailsFragment();
@@ -140,6 +145,21 @@ public class MainActivity extends AppCompatActivity
             videoDetailsFragment.setArguments(args);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragments, videoDetailsFragment, buttonName).addToBackStack(buttonName).commit();
+        }
+        else if(fragmentName.equalsIgnoreCase(EbooksFragment.class.getName()))
+        {
+            EbooksListFragment ebooksListFragment = new EbooksListFragment();
+            ebooksListFragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, ebooksListFragment, buttonName).addToBackStack(buttonName).commit();
+        }
+        else if(fragmentName.equalsIgnoreCase(EbooksListFragment.class.getName()))
+        {
+            args.putString(Constants.EBOOK_URL,buttonName);
+            EbookDetailsFragment ebookDetailsFragment = new EbookDetailsFragment();
+            ebookDetailsFragment.setArguments(args);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragments, ebookDetailsFragment, buttonName).addToBackStack(buttonName).commit();
         }
     }
 

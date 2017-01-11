@@ -17,17 +17,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import huzefagadi.com.zoom.activities.MainActivity;
 import huzefagadi.com.zoom.R;
-import huzefagadi.com.zoom.beans.VideoBean;
+import huzefagadi.com.zoom.activities.MainActivity;
+import huzefagadi.com.zoom.beans.EbookBean;
+import huzefagadi.com.zoom.fragments.EbookDetailsFragment;
+import huzefagadi.com.zoom.fragments.EbooksListFragment;
 import huzefagadi.com.zoom.fragments.VideoDetailsFragment;
-import huzefagadi.com.zoom.fragments.VideosListFragment;
 
 /**
  * Created by Rashida on 04/01/17.
  */
-public class VideosListAdapter extends RecyclerView.Adapter<VideosListAdapter.ViewHolder> {
-    private List <VideoBean> videoList;
+public class EbooksListAdapter extends RecyclerView.Adapter<EbooksListAdapter.ViewHolder> {
+    private List <EbookBean> ebookList;
     private Context context;
     private Fragment fromFragment;
     // Provide a reference to the views for each data item
@@ -36,10 +37,10 @@ public class VideosListAdapter extends RecyclerView.Adapter<VideosListAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 
-        @BindView(R.id.videoTitle)
-        TextView videoTitle;
-        @BindView(R.id.videoThumbnail)
-        ImageView videoThumbnail;
+        @BindView(R.id.ebookTitle)
+        TextView ebookTitle;
+        @BindView(R.id.ebookThumbnail)
+        ImageView ebookThumbnail;
         @BindView(R.id.card_view)
         CardView cardView;
         public ViewHolder(View view) {
@@ -51,22 +52,22 @@ public class VideosListAdapter extends RecyclerView.Adapter<VideosListAdapter.Vi
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public VideosListAdapter(List<VideoBean> videoList, Context context,Fragment fromFragment) {
-        this.videoList = videoList;
+    public EbooksListAdapter(List<EbookBean> ebookList, Context context, Fragment fromFragment) {
+        this.ebookList = ebookList;
         this.context = context;
         this.fromFragment = fromFragment;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public VideosListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                             int viewType) {
+    public EbooksListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                           int viewType) {
         // create a new view
         View v = null;
-        if(fromFragment instanceof VideosListFragment)
+        if(fromFragment instanceof EbooksListFragment)
         {
             v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.video_row_view, parent, false);
+                    .inflate(R.layout.ebook_row_view, parent, false);
         }
         else if(fromFragment instanceof VideoDetailsFragment)
         {
@@ -79,30 +80,30 @@ public class VideosListAdapter extends RecyclerView.Adapter<VideosListAdapter.Vi
         return vh;
     }
 
+
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        VideoBean videoBean = videoList.get(position);
-        final String title = videoBean.getVideoTitle();
+        final EbookBean ebookBean = ebookList.get(position);
+        final String title = ebookBean.getTitle();
         Picasso.with(context)
-                .load("https://img.youtube.com/vi/"+videoBean.getVideoId()+"/hqdefault.jpg")
-              //  .resize(holder.ebookThumbnail.getWidth(),400)
+                .load(ebookBean.getThumbnailUrl())
+                //  .resize(holder.ebookThumbnail.getWidth(),400)
                 //.placeholder(R.drawable.slider_image)
                 //.error(R.drawable.slider_image)
-                .into(holder.videoThumbnail);
-        holder.videoTitle.setText(videoBean.getVideoTitle());
-        holder.videoThumbnail.setTag(videoBean.getVideoId());
-        holder.videoThumbnail.setOnClickListener(new View.OnClickListener() {
+                .into(holder.ebookThumbnail);
+        holder.ebookTitle.setText(ebookBean.getTitle());
+        holder.ebookThumbnail.setTag(ebookBean.getUrl());
+        holder.ebookThumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (fromFragment instanceof VideoDetailsFragment) {
-                    VideoDetailsFragment videoDetailsFragment = (VideoDetailsFragment) fromFragment;
-                    videoDetailsFragment.onVideoSelected(String.valueOf(view.getTag()));
-                } else if (fromFragment instanceof VideosListFragment) {
-                    ((MainActivity) context).onButtonPressed(VideosListFragment.class.getName(), title);
+                if (fromFragment instanceof EbookDetailsFragment) {
+
+                } else if (fromFragment instanceof EbooksListFragment) {
+                    ((MainActivity) context).onButtonPressed(EbooksListFragment.class.getName(), ebookBean.getUrl());
                 }
 
             }
@@ -114,7 +115,7 @@ public class VideosListAdapter extends RecyclerView.Adapter<VideosListAdapter.Vi
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return videoList.size();
+        return ebookList.size();
     }
 }
 

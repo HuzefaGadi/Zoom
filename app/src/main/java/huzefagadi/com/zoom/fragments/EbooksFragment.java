@@ -7,22 +7,26 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 import huzefagadi.com.zoom.R;
+import huzefagadi.com.zoom.adapters.GridViewAdapter;
+import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
+ * activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link EbooksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class EbooksFragment extends Fragment {
-
+    @BindView(R.id.grid_view_home)
+    GridView gridView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -44,13 +48,14 @@ public class EbooksFragment extends Fragment {
         // Inflate the grid_card for this fragment
         View view = inflater.inflate(R.layout.fragment_ebooks, container, false);
         ButterKnife.bind(this,view);
+        gridView.setAdapter(new GridViewAdapter(getActivity(), this, "EbooksFragment"));
         return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(String buttonName) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onButtonPressed(this.getClass().getName(),buttonName);
         }
     }
 

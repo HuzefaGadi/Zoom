@@ -17,7 +17,7 @@ import huzefagadi.com.zoom.interfaces.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
+ * activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  */

@@ -1,4 +1,4 @@
-package huzefagadi.com.zoom;
+package huzefagadi.com.zoom.utilities;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
