@@ -57,18 +57,50 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <RelativeLayout
+            android:id="@+id/layout_gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_layout_lastname"
+            android:paddingLeft="4dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textSize="20sp"
+                android:text="Gender"
+
+                android:id="@+id/tv_gender"/>
+
+            <Spinner
+                android:id="@+id/gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_gender"
+                android:layout_marginLeft="10dp"
+                android:drawSelectorOnTop="true"
+                android:entries="@array/gender_array"
+                />
+        </RelativeLayout>
+
+
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/input_layout_lastname"
+            android:layout_below="@+id/layout_gender"
             android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_username" />
+                android:hint="@string/hint_username"
+                android:inputType="textEmailAddress" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -83,7 +115,8 @@
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_password" />
+                android:hint="@string/hint_password"
+                android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -98,7 +131,8 @@
                 android:id="@+id/input_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_confirm_password" />
+                android:hint="@string/hint_confirm_password"
+                android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -113,7 +147,8 @@
                 android:id="@+id/input_mobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_mobile_number" />
+                android:hint="@string/hint_mobile_number"
+                android:inputType="phone" />
 
         </android.support.design.widget.TextInputLayout>
 

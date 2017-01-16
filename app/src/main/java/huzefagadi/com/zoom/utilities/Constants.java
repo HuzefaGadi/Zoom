@@ -20,6 +20,7 @@ public class Constants {
     public static String SHARED_PREFERENCES_NAME="sharedpreferences";
     public static String SP_USERNAME="username";
     public static String[] COURSES = new String[]{"Cisco courses","Microsoft Courses","Linux Courses","Security Courses","VMware","Search"};
+    public static String LOGGED_IN_USER_AUTH="authToken";
     private List<VideoBean> videoList;
     private List<EbookBean> ebookList;
     public static String EBOOK_URL="url";
@@ -104,4 +105,6 @@ public class Constants {
     public void setVideoList(List<VideoBean> videoList) {
         this.videoList = videoList;
     }
+
+    public static String BASE_URL = "http://www.statigsoft.com/tutorial/";
 }
